@@ -11,5 +11,4 @@ Port of ThirteenAG's BobbleHead plugin from PC to GTA SA/SAMP Android using Moon
 - monethook
 
 **Usage**
-
 /bobblehead — open menu

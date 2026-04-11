@@ -139,7 +139,6 @@ imgui.OnFrame(
     function() return WinState[0] end,
     function()
         imgui.SetNextWindowPos(imgui.ImVec2(SW / 2, SH / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
-        imgui.SetNextWindowSize(imgui.ImVec2(300, 90), imgui.Cond.FirstUseEver)
         imgui.Begin('BobbleHead', WinState, imgui.WindowFlags.NoCollapse)
         imgui.Checkbox('Enable', enabled)
         imgui.PushItemWidth(imgui.GetContentRegionAvail().x)

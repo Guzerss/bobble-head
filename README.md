@@ -15,4 +15,4 @@ Port of ThirteenAG's BobbleHead plugin from PC to GTA SA/SAMP Android using Moon
 /bobblehead — open menu
 
 **Credits Mod :
-ThirteenAG, Guzers
+ThirteenAG, Guzers**

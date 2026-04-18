@@ -149,8 +149,12 @@ imgui.OnFrame(
 )
 
 function main()
-    sampRegisterChatCommand('bobblehead', function()
-        WinState[0] = not WinState[0]
+    sampRegisterChatCommand('bobblehead', function() 
+      WinState[0] = not WinState[0] 
     end)
-    while true do wait(0) end
+    wait(-1)
 end
+
+addEventHandler('onScriptTerminate', function(scr)
+    if scr == script.this then pedRenderHook.stop() end
+end)

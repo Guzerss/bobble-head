@@ -1,9 +1,10 @@
+script_name("BobbleHead")
+
 local imgui = require 'mimgui'
 local ffi   = require('ffi')
 local hook  = require('monethook')
 local mem   = require('SAMemory')
-
-mem.require('CPed')
+local cfg   = require('jsoncfg')
 
 local cast = ffi.cast
 local gta  = ffi.load('GTASA')
@@ -59,10 +60,24 @@ local OFFSET_ATOMIC_GEOM = 0x10
 local outHier    = ffi.new('void*[1]')
 local outSkinned = ffi.new('void*[1]')
 
+local defaultConfig = {
+    enabled = false,
+    scale   = 3,
+}
+
+local config = cfg.load(defaultConfig, 'bobblehead')
+cfg.save(config, 'bobblehead')
+
 local SW, SH    = getScreenResolution()
 local WinState  = new.bool(false)
-local enabled   = new.bool(false)
-local sliderVal = new.int(3)
+local enabled   = new.bool(config.enabled)
+local sliderVal = new.int(config.scale)
+
+local function saveConfig()
+    config.enabled = enabled[0]
+    config.scale   = sliderVal[0]
+    cfg.save(config, 'bobblehead')
+end
 
 local function getIndex(hier, id)
     for i = 0, hier.numNodes - 1 do
@@ -140,17 +155,17 @@ imgui.OnFrame(
     function()
         imgui.SetNextWindowPos(imgui.ImVec2(SW / 2, SH / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin('BobbleHead', WinState, imgui.WindowFlags.NoCollapse)
-        imgui.Checkbox('Enable', enabled)
+        if imgui.Checkbox('Enable', enabled) then saveConfig() end
         imgui.PushItemWidth(imgui.GetContentRegionAvail().x)
-        imgui.SliderInt('##scale', sliderVal, 1, 10, 'Size: %d')
+        if imgui.SliderInt('##scale', sliderVal, 1, 5, 'Size: %d') then saveConfig() end
         imgui.PopItemWidth()
         imgui.End()
     end
 )
 
 function main()
-    sampRegisterChatCommand('bobblehead', function() 
-      WinState[0] = not WinState[0] 
+    sampRegisterChatCommand('bobblehead', function()
+        WinState[0] = not WinState[0]
     end)
     wait(-1)
 end

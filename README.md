@@ -5,4 +5,4 @@
 CMD: `/bobblehead`
 
 **Credits Mod :
-ThirteenAG, Guzers**
+gennariarmando, Guzers**
